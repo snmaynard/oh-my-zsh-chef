@@ -10,7 +10,7 @@ end
 
 # for each listed user
 node['oh_my_zsh']['users'].each do |user_hash|
-  home_directory = "/home/#{user_hash[:login}"
+  home_directory = "/home/#{user_hash[:login]}"
 
   git "#{home_directory}/.oh-my-zsh" do
     repository 'git://github.com/robbyrussell/oh-my-zsh.git'
