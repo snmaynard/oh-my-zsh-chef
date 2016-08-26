@@ -13,7 +13,7 @@ node['oh_my_zsh']['users'].each do |user_hash|
   home_directory = "/home/#{user_hash[:login]}"
 
   git "#{home_directory}/.oh-my-zsh" do
-    repository 'git://github.com/robbyrussell/oh-my-zsh.git'
+    repository node['oh_my_zsh'][:repository]
     user user_hash[:login]
     reference "master"
     action :sync
@@ -37,10 +37,11 @@ node['oh_my_zsh']['users'].each do |user_hash|
     shell '/bin/zsh'
   end
 
-
-  execute "source /etc/profile to all zshrc" do
-    command "echo 'source /etc/profile' >> /etc/zsh/zprofile"
-    not_if "grep 'source /etc/profile' /etc/zsh/zprofile"
+  if platform?("debian", "ubuntu")
+    execute "source /etc/profile to all zshrc" do
+      command "echo 'source /etc/profile' >> /etc/zsh/zprofile"
+      not_if "grep 'source /etc/profile' /etc/zsh/zprofile"
+    end
   end
 
 end
