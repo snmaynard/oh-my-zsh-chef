@@ -36,12 +36,11 @@ node['oh_my_zsh']['users'].each do |user_hash|
     action :modify
     shell '/bin/zsh'
   end
+end
 
-  if platform?("debian", "ubuntu")
-    execute "source /etc/profile to all zshrc" do
-      command "echo 'source /etc/profile' >> /etc/zsh/zprofile"
-      not_if "grep 'source /etc/profile' /etc/zsh/zprofile"
-    end
+if platform?("debian", "ubuntu")
+  execute "source /etc/profile to all zshrc" do
+    command "echo 'source /etc/profile' >> /etc/zsh/zprofile"
+    not_if "grep 'source /etc/profile' /etc/zsh/zprofile"
   end
-
 end
